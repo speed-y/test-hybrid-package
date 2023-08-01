@@ -1,0 +1,46 @@
+{
+  "name": "test-hybrid-package",
+  "private":true,
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "cjs/index.js",
+  "module": "index.js",
+  "exports": {
+    ".": {
+      "require": "./cjs/index.js",
+      "import": "./index.js"
+    },
+    "./Binary*.js": {
+      "types": "./binary/Binary*.d.ts",
+      "import": "./binary/Binary*.js"
+    },
+    "./Use*.js": {
+      "types": "./runtime/UseConnection.d.ts",
+      "import": "./runtime/UseConnection.js"
+    },
+    "./*.js": {
+      "types": "./*.d.ts",
+      "import": "./*.js"
+    }
+  },
+  "scripts": {
+    "prebuild": "rimraf ./lib",
+    "compile": "npm-run-all compile-ts-esm add-js-to-imports-esm compile-ts-cjs",
+    "compile-ts-esm": "tsc -p ./tsconfig.json",
+    "compile-ts-cjs": "tsc -p ./tsconfig.cjs.json",
+    "build": "npm-run-all compile",
+    "add-js-to-imports-esm": "tsc-esm-fix --tsconfig='./tsconfig.json'",
+    "fixup": "node ./fixup.js",
+    "pack": "cd ./lib && npm pack --pack-destination ../../",
+    "build-and-pack": "npm-run-all build fixup pack"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^5.0.1",
+    "tsc-esm-fix": "^2.20.14",
+    "typescript": "^4.9.4"
+  }
+}

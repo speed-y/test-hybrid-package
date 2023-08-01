@@ -1,0 +1,13 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "sourceMap": true,
+    "inlineSources": true,
+    "preserveConstEnums": true,
+    "moduleResolution": "Node",
+    "declaration": true,
+    "declarationMap": true,
+    "typeRoots": ["node_modules/@types"]
+  },
+  "exclude": ["node_modules/*","./lib/*"]
+}
